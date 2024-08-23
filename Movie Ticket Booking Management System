@@ -1,0 +1,72 @@
+class Movie:
+    def init(self, title, duration):
+        self.title = title
+        self.duration = duration
+
+class Showtime:
+    def init(self, movie, time):
+        self.movie = movie
+        self.time = time
+
+class Ticket:
+    def init(self, showtime, seat):
+        self.showtime = showtime
+        self.seat = seat
+
+class MovieTheater:
+    def init(self):
+        self.movies = []
+        self.showtimes = []
+        self.tickets = []
+
+    def add_movie(self, movie):
+        self.movies.append(movie)
+
+    def add_showtime(self, showtime):
+        self.showtimes.append(showtime)
+
+    def book_ticket(self, showtime, seat):
+        if self.is_seat_available(showtime, seat):
+            ticket = Ticket(showtime, seat)
+            self.tickets.append(ticket)
+            return ticket
+        else:
+            print("Seat is already booked!")
+            return None
+
+    def is_seat_available(self, showtime, seat):
+        for ticket in self.tickets:
+            if ticket.showtime == showtime and ticket.seat == seat:
+                return False
+        return True
+
+    def display_movies(self):
+        for movie in self.movies:
+            print(f"Title: {movie.title}, Duration: {movie.duration} minutes")
+
+    def display_showtimes(self):
+        for showtime in self.showtimes:
+            print(f"Movie: {showtime.movie.title}, Time: {showtime.time}")
+
+# Example usage:
+theater = MovieTheater()
+
+# Adding movies
+movie1 = Movie("Inception", 148)
+movie2 = Movie("The Dark Knight", 152)
+theater.add_movie(movie1)
+theater.add_movie(movie2)
+
+# Adding showtimes
+showtime1 = Showtime(movie1, "18:00")
+showtime2 = Showtime(movie2, "21:00")
+theater.add_showtime(showtime1)
+theater.add_showtime(showtime2)
+
+# Display movies and showtimes
+theater.display_movies()
+theater.display_showtimes()
+
+# Booking tickets
+ticket1 = theater.book_ticket(showtime1, "A1")
+ticket2 = theater.book_ticket(showtime1, "A1")  # This should print "Seat is already booked
